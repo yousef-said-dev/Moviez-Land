@@ -5,29 +5,24 @@ import Image from "next/image";
 import { FaHeart, FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { APIRequests } from "@/store/api";
- async function  Card({ ...movie }) {
+import Provider from "@/store/Provider";
+function  Card({ ...movie }) {
    const { isLoggedIn, user } = useProvider();
    const [isFavorite, setIsFavorite] = useState(false);
    const [favorites, setFavorites] = useState([]);
-   
-   isLoggedIn&&APIRequests.getFavorites(user?.id)
   useEffect(()=>{
   console.log(isLoggedIn);
   if(isLoggedIn){
     console.log('logged in');
-    async ()=> {
-      console.log('fetching favorites');
-      const favorites = 
-
-       console.log( await favorites);
-       
+    setFavorites(user.favorites);
+      user.favorites.includes(movie.id)?setIsFavorite(true):setIsFavorite(false);   
       };
       console.log("Fetching favorites...");
-    }
   },[])
   const handleClick = async (id) => {
     try {
       if(favorites.includes(id)){
+        console.log(favorites);
         console.log("Removing favorite:", id);
         setIsFavorite(false);
         
