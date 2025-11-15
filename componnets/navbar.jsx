@@ -18,7 +18,7 @@ export default function Header() {
   console.log(user);
   return (
     // Fixed header at the top, dark background to match the theme
-    <nav className="fixed top-0 left-0 right-0 md:top-0 sm:fixed z-50 bg-slate-900 shadow-2xl border-b border-blue-800/50">
+    <nav className="fixed top-0 left-0 right-0 md:top-0 sm:fixed z-20 bg-slate-900 shadow-2xl border-b border-blue-800/50">
       <div className="container mx-auto px-4 sm:px-8 py-3 flex justify-between items-center">
         
         {/* Logo */}

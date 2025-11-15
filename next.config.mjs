@@ -3,8 +3,12 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
+                hostname: 'placehold.co',
+            },
+            {
                 hostname: 'image.tmdb.org',
-            }
+            },
+
         ]
     }
 };

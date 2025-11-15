@@ -21,7 +21,21 @@ export const APIRequests = {
 
     },
   })
-  return await data.json()
+    const trailer = await fetch(`${process.env.TMDB_BASE_URL}/movie/${id}/videos`,{
+    method:"GET",
+    headers:{
+      accept: 'application/json',
+      Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`
+
+    },
+  })
+
+  let key = await trailer.json();
+  key = key.results[0].key;
+  console.log(key);
+  console.log('Trailer : '+ {trailer});
+  const trailerPath = `https://www.youtube.com/embed/${key}?controls=0`;
+  return  [await data.json() , trailerPath];
 
 },
  search:async (query)=>{
