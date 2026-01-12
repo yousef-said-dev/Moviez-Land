@@ -1,5 +1,5 @@
 "use client"
-import { Home, Search, Heart, FlameIcon } from 'lucide-react';
+import { Home, Search, Heart, FlameIcon, LogIn, LogOut, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useProvider } from '@/store/Provider';
@@ -50,7 +50,7 @@ export default function Header() {
                     className="text-xs lg:text-sm xl:text-base font-medium text-gray-300 px-2 py-1.5 lg:px-3 lg:py-2 xl:px-4 xl:py-2 rounded-full border border-blue-400 hover:bg-blue-600 hover:text-white transition duration-200 flex items-center space-x-1 lg:space-x-1.5"
                   >
                     <span className="hidden lg:inline">Log Out</span>
-                    <LogInIcon className="w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
+                    <LogOut className="w-4 h-4 lg:w-4 lg:h-4 xl:w-5 xl:h-5" />
                   </button>
                 </>
               ) : (
@@ -109,7 +109,7 @@ export default function Header() {
                   className="w-full text-sm sm:text-base font-medium text-gray-300 p-2.5 sm:p-3 rounded-lg border border-blue-400 hover:bg-blue-600 hover:text-white active:scale-95 transition duration-200 flex items-center justify-center space-x-2"
                 >
                   <span>Log Out</span>
-                  <LogInIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
               </div>
             ) : (
