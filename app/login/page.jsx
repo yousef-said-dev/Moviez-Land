@@ -34,7 +34,7 @@ export default function Login() {
       window.recaptchaVerifier = new RecaptchaVerifier(firebaseAuth, 'recaptcha-container', {
         'size': 'invisible',
         'callback': (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
+
         }
       });
     }
@@ -113,7 +113,7 @@ export default function Login() {
       const result = await verificationId.confirm(otp);
       const user = result.user;
 
-      // Now sign in with NextAuth using the verified phone number
+
       const nextAuthResult = await signIn("phone", {
         phoneNumber: user.phoneNumber,
         name: user.displayName || `User-${user.phoneNumber.slice(-4)}`,
