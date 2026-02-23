@@ -2,6 +2,7 @@ import Card from "@/componnets/card";
 import { APIRequests } from "@/store/api"
 import Pagination from "@/componnets/Pagination";
 import MovieFilter from "@/componnets/MovieFilter";
+import BackButton from "@/componnets/BackButton";
 
 export default async function Trendings({ searchParams }) {
     const { page, genres, sort } = await searchParams;
@@ -14,7 +15,10 @@ export default async function Trendings({ searchParams }) {
     const trendings = await APIRequests.trending(page || 1, filters)
 
     return (
-        <div className="min-h-screen bg-slate-900 pt-24 pb-20">
+        <div className="min-h-screen bg-slate-900 pt-24 pb-20 px-4 md:px-12">
+            <div className="mb-8">
+                <BackButton />
+            </div>
             <h1 className="text-5xl md:text-7xl font-bold text-center text-blue-500 mb-12">Trending Movies</h1>
 
             <div className="flex justify-center mb-10">

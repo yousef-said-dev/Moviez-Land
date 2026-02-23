@@ -9,7 +9,7 @@ import Loader from "@/componnets/Loader";
 import { redirect } from "next/navigation";
 
 export default async function Home({ searchParams }) {
-  const { page, genres, year, rating, sort } = await searchParams;
+  const { page, genres, sort } = await searchParams;
   if (!page) {
     new URLSearchParams().set('page', '1');
     return redirect("/?page=1")

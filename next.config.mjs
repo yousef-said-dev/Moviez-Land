@@ -15,7 +15,11 @@ const nextConfig = {
                 hostname: 'res.cloudinary.com',
             }
         ]
-    }
+    },
+    experimental: {
+        optimizePackageImports: ['lucide-react', 'react-icons'],
+    },
 };
 
 export default nextConfig;
+

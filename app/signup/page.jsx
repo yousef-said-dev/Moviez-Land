@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { toast } from "sonner";
 import { signupSchema } from "@/utils/schemas";
+import BackButton from "@/componnets/BackButton";
 
 export default function Signup() {
   const { setUser, isLoggedIn, setIsLoggedIn, user } = useProvider();
@@ -71,7 +72,10 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 p-6">
+      <div className="w-full max-w-md mb-6">
+        <BackButton />
+      </div>
       <div className="w-full max-w-md bg-gray-800/70 backdrop-blur-sm rounded-lg p-8 text-white shadow-lg">
         <h1 className="text-2xl font-semibold mb-4">Create an account</h1>
         <p className="text-sm text-gray-300 mb-6">Sign up to save favorites and get personalized recommendations.</p>

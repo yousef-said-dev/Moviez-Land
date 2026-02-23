@@ -10,30 +10,10 @@
     transform: scale(0.9);
 }
 
-/* Pulsing effect for active favorites */
-.heart-btn.bg-blue-600 {
-    animation: heart_pulse 2s ease-in-out infinite;
-}
 
-@keyframes heart_pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(43, 127, 255, 0.7);
-    }
 
-    70% {
-        box-shadow: 0 0 0 10px rgba(43, 127, 255, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(43, 127, 255, 0);
-    }
-}
 
 /* Heart icon internal scale */
 .heart-btn svg {
     transition: transform 0.2s ease;
-}
-
-.heart-btn:hover svg {
-    transform: rotate(15deg) scale(1.1);
 }

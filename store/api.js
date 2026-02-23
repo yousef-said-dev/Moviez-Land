@@ -28,7 +28,7 @@ const fetchWithTimeout = async (url, options = {}, timeout = 15000) => {
 
 export const APIRequests = {
   movies: async (pageNumber = 1, filters = {}) => {
-    const { genres, year, rating, sort } = filters;
+    const { genres, sort } = filters;
     let url = `${process.env.TMDB_BASE_URL}/discover/movie?include_adult=false&include_video=true&language=en-US&page=${pageNumber}`;
 
     url += `&sort_by=${sort || 'popularity.desc'}`;
@@ -73,7 +73,6 @@ export const APIRequests = {
       headers: {
         accept: 'application/json',
         Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`
-
       },
     })
   },
@@ -123,7 +122,15 @@ export const APIRequests = {
       }
     }, 60000)
   },
-
+  similar: async (id) => {
+    return await fetchWithTimeout(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/movie/${id}/similar?language=en-US`, {
+      method: "GET",
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_API_ACCESS_TOKEN}`
+      },
+    })
+  },
 }
 
 

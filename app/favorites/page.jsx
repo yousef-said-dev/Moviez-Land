@@ -5,6 +5,7 @@ import { APIRequests } from "@/store/api";
 import Link from "next/link";
 import Card from "@/componnets/card";
 import MovieFilter from "@/componnets/MovieFilter";
+import BackButton from "@/componnets/BackButton";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 export default function FavoritesMovies() {
@@ -12,9 +13,6 @@ export default function FavoritesMovies() {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const searchParams = useSearchParams();
-
-
-
 
   useEffect(() => {
     if (!user || !user.favorites || user.favorites.length === 0) {
@@ -80,7 +78,7 @@ export default function FavoritesMovies() {
           case "title.asc":
             return a.title.localeCompare(b.title);
           case "title.desc":
-            return b.title.localeCompare(a.title);
+            return b.title.localeCompare(b.title);
           default:
             return 0;
         }
@@ -101,6 +99,9 @@ export default function FavoritesMovies() {
         </div>
       ) : (
         <section className="container mx-auto px-4">
+          <div className="mb-8">
+            <BackButton />
+          </div>
           <h1 className="text-5xl md:text-7xl font-bold text-center text-blue-500 mb-12">Your Favorites</h1>
 
           <div className="flex justify-center mb-10">

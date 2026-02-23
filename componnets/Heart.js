@@ -76,7 +76,7 @@ export default function Heart({ movieId, isComplete = false }) {
     return (
       <button
         onClick={() => handleClick(movieId)}
-        className={`heart-btn absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all active:scale-75 shadow-lg z-50 ${isFavorite
+        className={`heart-btn absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all active:scale-75 shadow-lg z-30 ${isFavorite
           ? 'bg-blue-600 text-white shadow-blue-500/50 scale-110'
           : 'bg-black/40 text-white/70 hover:bg-blue-600/80 hover:text-white'
           }`}

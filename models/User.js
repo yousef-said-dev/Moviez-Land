@@ -3,16 +3,22 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   email: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
+    sparse: true,
   },
   password: {
     type: String,
-    required: true,
+    required: false,
+  },
+  phoneNumber: {
+    type: String,
+    required: false,
+    unique: true,
+    sparse: true,
   },
   profileImg: {
     type: String,
@@ -24,5 +30,5 @@ const UserSchema = new mongoose.Schema({
     required: false,
     default: [],
   },
-});
+}, { timestamps: true });
 export default mongoose.models.User || mongoose.model('User', UserSchema);

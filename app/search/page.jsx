@@ -6,6 +6,7 @@ import Card from "@/componnets/card";
 import { Suspense } from "react";
 import Loader from "@/componnets/Loader";
 import MovieFilter from "@/componnets/MovieFilter";
+import BackButton from "@/componnets/BackButton";
 
 export default async function Search({ searchParams }) {
   const { query, page, genres, sort } = await searchParams;
@@ -23,7 +24,10 @@ export default async function Search({ searchParams }) {
 
   return (
     <>
-      <div className="pt-24 min-h-screen bg-slate-900">
+      <div className="pt-24 min-h-screen bg-slate-900 px-4 md:px-12">
+        <div className="mb-6">
+          <BackButton />
+        </div>
         <SearchBar />
 
         <div className="flex justify-center mt-8 mb-6">

@@ -17,7 +17,7 @@ function Pagination({ totalPages }) {
     return (
         <div className="flex justify-center items-center w-fit my-10 gap-2 mx-auto border-2 border-blue-800 rounded-full">
             <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} className="text-blue-500 hover:text-blue-800 cursor-pointer font-bold py-2 px-4 rounded">Prev</button>
-            <span className="text-white">{currentPage} <Link href="" className="text-blue-400" onClick={() => handlePageChange(currentPage + 1)}> {currentPage + 1 <= totalPages ? currentPage + 1 : ''}</Link> <Link className="text-blue-500" href="" onClick={() => handlePageChange(currentPage + 2)}> {currentPage + 2 <= totalPages ? currentPage + 2 : ''}</Link></span>
+            <span className="text-white"> <Link href="" className="text-blue-400 me-1" onClick={() => handlePageChange(currentPage - 1)}> {currentPage - 1 > 0 ? currentPage - 1 : ''}</Link>{currentPage} <Link className="text-blue-500" href="" onClick={() => handlePageChange(currentPage + 1)}> {currentPage + 1 <= totalPages ? currentPage + 1 : ''}</Link></span>
             <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} className="text-blue-500 hover:text-blue-800 cursor-pointer font-bold py-2 px-4 rounded">Next</button>
         </div>
     )
