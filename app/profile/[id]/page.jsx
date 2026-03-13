@@ -85,7 +85,7 @@ function Profile() {
 
     return (
         <div className="relative w-full">
-            <div className="absolute top-8 left-8 z-50">
+            <div className="pt-8 px-6 md:px-12 relative z-50">
                 <BackButton />
             </div>
             <form onSubmit={handleSubmit} className="flex items-center flex-col gap-2 mt-20 w-full min-h-screen">

@@ -7,54 +7,43 @@ import "@/componnets/css/heart.css";
 
 export default function Heart({ movieId, isComplete = false }) {
   const { isLoggedIn: isUserLoggedIn, user, setUser } = useProvider();
+  const [disable, setDisable] = useState(false);
   const isFavorite = user?.favorites?.includes(movieId) || false;
   const favorites = user?.favorites || [];
 
   const handleClick = async (id) => {
+    if (disable) return;
     try {
-      if (favorites.includes(id)) {
+      setDisable(true);
+      const isRemoving = favorites.includes(id);
 
-        const response = await fetch(`/api/user/favorites/${user.id}`, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            favoriteID: id,
-            action: "remove",
-          })
-        });
-        toast.loading("Removing from favorites...", { id: "fav-action" })
+      toast.loading(isRemoving ? "Removing from favorites..." : "Adding to favorites...", { id: "fav-action" });
 
-        if (response.status === 201) {
-          const data = await response.json();
-          setUser({ ...user, favorites: data.favorites });
-          toast.success("Removed from favorites", { id: "fav-action" });
-        }
+      const response = await fetch(`/api/user/favorites/${user.id}`, {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          favoriteID: id,
+          action: isRemoving ? "remove" : "add",
+        })
+      });
 
+      if (response.status === 201) {
+        const data = await response.json();
+        setUser({ ...user, favorites: data.favorites });
+        toast.success(isRemoving ? "Removed from favorites" : "Added to favorites!", { id: "fav-action" });
+      } else {
+        toast.error("Failed to update favorites", { id: "fav-action" });
       }
-      else {
-        const response = await fetch(`/api/user/favorites/${user.id}`, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            favoriteID: id,
-            action: "add",
-          })
-        });
-        toast.loading("Adding to favorites...", { id: "fav-action" })
-        if (response.status === 201) {
-          const data = await response.json();
-          setUser({ ...user, favorites: data.favorites });
-          toast.success("Added to favorites!", { id: "fav-action" });
-        }
-      }
+
     } catch (error) {
-      toast.error('Something went wrong', { id: "fav-action" })
+      console.error("Favorite action error:", error);
+      toast.error('Something went wrong', { id: "fav-action" });
+    } finally {
+      setDisable(false);
     }
-
   };
   if (!isUserLoggedIn) {
     return (
@@ -75,8 +64,9 @@ export default function Heart({ movieId, isComplete = false }) {
   if (!isComplete) {
     return (
       <button
+        disabled={disable}
         onClick={() => handleClick(movieId)}
-        className={`heart-btn absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all active:scale-75 shadow-lg z-30 ${isFavorite
+        className={`heart-btn absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all active:scale-75 shadow-lg z-30 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none ${isFavorite
           ? 'bg-blue-600 text-white shadow-blue-500/50 scale-110'
           : 'bg-black/40 text-white/70 hover:bg-blue-600/80 hover:text-white'
           }`}
@@ -89,8 +79,10 @@ export default function Heart({ movieId, isComplete = false }) {
 
   return (
     <button
+      disabled={disable}
       onClick={() => handleClick(movieId)}
-      className={`flex items-center justify-center gap-3 px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 active:scale-95 shadow-xl min-w-[200px] border-2 ${isFavorite
+
+      className={`flex items-center justify-center gap-3 px-8 py-3 rounded-full font-bold transition-all transform hover:scale-105 active:scale-95 shadow-xl min-w-[200px] border-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none ${isFavorite
         ? 'bg-transparent border-blue-600 text-blue-400 hover:bg-blue-600/10'
         : 'bg-transparent border-white text-white hover:bg-white/10'
         }`}

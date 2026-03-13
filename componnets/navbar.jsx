@@ -61,17 +61,17 @@ export default function Header() {
             <div className="hidden md:flex items-center space-x-6">
               {isLoggedIn ? (
                 <div className="flex items-center space-x-6">
-                  <Link href={`/profile/${user.id}`} className="group flex items-center space-x-4">
+                  <Link href={`/profile/${user?.id}`} className="group flex items-center space-x-4">
                     <div className="relative w-11 h-11 border-2 border-transparent group-hover:border-blue-500 rounded-full transition-all duration-300 p-0.5 shadow-xl">
                       <Image
-                        src={user.profileImg.trim()}
+                        src={user?.profileImg.trim()}
                         alt="profile"
                         width={40}
                         height={40}
                         className="rounded-full object-cover"
                       />
                     </div>
-                    <span className="text-base font-bold text-gray-200 group-hover:text-white transition-colors">{user.name.split(' ')[0]}</span>
+                    <span className="text-base font-bold text-gray-200 group-hover:text-white transition-colors">{user?.name.split(' ')[0]}</span>
                   </Link>
                   <button
                     onClick={() => { signOut(); setIsLoggedIn(false); }}
@@ -126,9 +126,9 @@ export default function Header() {
             {isLoggedIn ? (
               <div className="p-4 bg-blue-900/20 rounded-2xl border border-blue-500/20">
                 <div className="flex items-center space-x-3 mb-4">
-                  <Image src={user.profileImg.trim()} alt="profile" width={40} height={40} className="rounded-full" />
+                  <Image src={user?.profileImg.trim()} alt="profile" width={40} height={40} className="rounded-full" />
                   <div>
-                    <p className="text-white font-bold text-sm">{user.name}</p>
+                    <p className="text-white font-bold text-sm">{user?.name}</p>
                     <p className="text-gray-500 text-xs">Premium User</p>
                   </div>
                 </div>

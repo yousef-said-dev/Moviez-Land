@@ -37,9 +37,8 @@ export default async function MovieDetails({ params }) {
 
   return (
     <div className="relative min-h-screen text-white bg-[#0B1120]">
-      {/* Back Button above the navbar - Fixed positioning */}
-      <div className="fixed top-4 left-4 md:left-[276px] z-[60] animate-in fade-in slide-in-from-top-4 duration-500">
-        <BackButton className="!px-4 !py-2 !rounded-xl !bg-black/40 backdrop-blur-xl border-white/10 hover:bg-blue-600 transition-all shadow-2xl scale-90 md:scale-100" />
+      <div className="pt-8 px-6 md:px-12 lg:px-20 relative z-50">
+        <BackButton />
       </div>
 
       <div className="absolute inset-0 h-[70vh]">
