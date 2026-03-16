@@ -39,7 +39,6 @@ export default function Header() {
       <nav className={`fixed top-0 md:left-64 left-0 right-0 z-50 navbar-container ${scrolled ? 'scrolled' : 'py-2'}`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="flex justify-between items-center h-16">
-            {/* Logo Section */}
             <Link href="/" className="flex items-center space-x-3 group z-50">
               <div className="relative w-20 h-20 md:w-12 md:h-12 logo-glow transition-transform duration-500 group-hover:rotate-[360deg]">
                 <Image
@@ -57,7 +56,6 @@ export default function Header() {
               </div>
             </Link>
 
-            {/* Auth Section */}
             <div className="hidden md:flex items-center space-x-6">
               {isLoggedIn ? (
                 <div className="flex items-center space-x-6">
@@ -93,7 +91,6 @@ export default function Header() {
               )}
             </div>
 
-            {/* Mobile Toggle */}
             <button
               onClick={toggleMobileMenu}
               className="md:hidden z-50 p-2 text-gray-300 hover:text-white transition-colors"
@@ -104,7 +101,6 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
       {showMobileMenu && (
         <div
           className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
@@ -112,7 +108,6 @@ export default function Header() {
         />
       )}
 
-      {/* Mobile Drawer */}
       <div className={`fixed top-0 right-0 h-full w-[280px] bg-slate-900/95 backdrop-blur-xl border-l border-blue-500/20 z-40 transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${showMobileMenu ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex flex-col h-full pt-24 px-6">
           <div className="space-y-6">

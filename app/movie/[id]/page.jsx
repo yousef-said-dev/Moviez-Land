@@ -107,7 +107,6 @@ export default async function MovieDetails({ params }) {
         </div>
       </div>
 
-      {/* Suggested Movies Section */}
       {similarMovies.length > 0 && (
         <div className="relative z-10 px-6 md:px-12 lg:px-20 py-20 bg-gradient-to-b from-transparent to-black/40">
           <div className="flex items-center gap-4 mb-10">

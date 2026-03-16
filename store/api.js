@@ -1,9 +1,15 @@
 
+import { getBaseUrl } from "@/utils/baseUrl";
+
 const fetchWithTimeout = async (url, options = {}, timeout = 15000) => {
+  const absoluteUrl = (url.startsWith("/") && typeof window === "undefined") 
+    ? `${getBaseUrl()}${url}` 
+    : url;
+
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
   try {
-    const response = await fetch(url, {
+    const response = await fetch(absoluteUrl, {
       ...options,
       signal: controller.signal
     });
