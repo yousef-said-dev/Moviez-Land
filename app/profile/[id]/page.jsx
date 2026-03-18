@@ -92,7 +92,7 @@ function Profile() {
                 <div className="flex items-center flex-col gap-2 w-full h-full pt-10">
                     <label htmlFor="profileImg" className="relative group cursor-pointer w-[200px] aspect-square rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500/20">
                         <Image
-                            src={profileImg || "/default_avatar.png"}
+                            src={profileImg || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
                             alt="Profile"
                             className="object-cover w-full h-full"
                             width={200}
