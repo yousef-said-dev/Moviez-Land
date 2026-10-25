@@ -9,8 +9,9 @@ import MovieFilter from "@/componnets/MovieFilter";
 import BackButton from "@/componnets/BackButton";
 
 export default async function Search({ searchParams }) {
-  const { query, page, genres, sort } = await searchParams;
-  const movies = await APIRequests.search(query, page || 1);
+  const { query, page, genres } = await searchParams;
+  const cleanQuery = query?.trim() || "";
+  const movies = cleanQuery ? await APIRequests.search(cleanQuery, page || 1) : null;
 
   let filteredResults = movies?.results || [];
 
@@ -37,7 +38,7 @@ export default async function Search({ searchParams }) {
         <div className="flex flex-wrap gap-10 justify-center px-4">
           <Suspense fallback={<Loader />}>
             {
-              query ? (
+              cleanQuery ? (
                 filteredResults.length > 0 ? (
                   filteredResults.map((movie) => (
                     <Card key={movie.id} {...movie} />

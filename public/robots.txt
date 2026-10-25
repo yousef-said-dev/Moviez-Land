@@ -1,0 +1,17 @@
+# Safe robots.txt for Moviez Land
+# Allows search engines to index core discovery pages and movie details
+# Blocks expensive dynamic search query combinations and API endpoints
+
+User-agent: *
+Disallow: /api/
+Disallow: /search
+Disallow: /profile/
+Disallow: /favorites
+
+# Allow search bots to index main landing pages and individual movies
+Allow: /
+Allow: /trendings
+Allow: /movie/
+
+# Friendly crawl-delay for bots that respect it
+Crawl-delay: 2

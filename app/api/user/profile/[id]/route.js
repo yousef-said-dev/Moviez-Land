@@ -21,42 +21,30 @@ export async function PUT(request, { params }) {
 
         await dbConnect();
         let updateData = {};
-        const nameExists = await User.findOne({ name: profile.name, _id: { $ne: id } });
-        if (profile.name) {
 
+        if (profile.name) {
+            const nameExists = await User.findOne({ name: profile.name, _id: { $ne: id } });
             if (nameExists) {
                 return NextResponse.json({ error: 'Name already exists' }, { status: 400 });
             }
+            updateData.name = profile.name;
         }
-        const emailExists = await User.findOne({ email: profile.email, _id: { $ne: id } });
+
         if (profile.email) {
+            const emailExists = await User.findOne({ email: profile.email, _id: { $ne: id } });
             if (emailExists) {
                 return NextResponse.json({ error: 'Email already exists' }, { status: 400 });
             }
+            updateData.email = profile.email;
         }
-        if (profile.name && !nameExists) {
-            updateData = {
-                ...updateData,
-                name: profile.name,
-            };
-        }
-        if (profile.email && !emailExists) {
-            updateData = {
-                ...updateData,
-                email: profile.email,
-            };
-        }
-
 
         if (profile.password && profile.password === profile.confirmPassword) {
             updateData.password = await passwordHashing(profile.password);
-
         } else if (profile.password && profile.password !== profile.confirmPassword) {
             return NextResponse.json({ error: 'Passwords do not match' }, { status: 400 });
         }
 
         const imageFile = data.get('profileImg');
-
 
         if (imageFile && imageFile.size > 0 && typeof imageFile !== 'string') {
             const currentUser = await User.findById(id);
@@ -79,7 +67,7 @@ export async function PUT(request, { params }) {
                     resource_type: 'auto',
                     folder: 'moviezland_profiles'
                 }, (error, result) => {
-                    if (error) return NextResponse.json({ message: "Timeout Profile Image Upload." }, { status: 500 })
+                    if (error) reject(error);
                     else resolve(result);
                 }).end(buffer);
             });

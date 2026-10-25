@@ -19,12 +19,11 @@ function Card({ ...movie }) {
         <Suspense fallback={<Loader />}>
           <Image
             src={imageUrl.trim()}
-            alt={movie.title}
+            alt={movie.title || "Movie poster"}
             width={220}
             height={330}
             loading="lazy"
-            blurDataURL="data"
-            placeholder="blur"
+            unoptimized={imageUrl.startsWith("http")}
             className="card_image object-cover relative"
           />
         </Suspense>

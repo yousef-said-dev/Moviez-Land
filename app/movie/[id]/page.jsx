@@ -5,27 +5,49 @@ import TrailerButton from "@/componnets/TrailerButton";
 import Heart from "@/componnets/Heart";
 import BackButton from "@/componnets/BackButton";
 import Card from "@/componnets/card";
+import { cache } from "react";
+import { notFound } from "next/navigation";
+
+// Request-scoped memoization to share identical results between generateMetadata and MovieDetails
+const getMovie = cache(async (id) => {
+  return await APIRequests.movie(id);
+});
+
+const getSimilar = cache(async (id) => {
+  return await APIRequests.similar(id);
+});
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const movieData = await APIRequests.movie(id);
-  const movie = movieData[0];
+  const movieData = await getMovie(id);
+  const movie = movieData?.[0];
+
+  if (!movie || movie.status === 404 || movie.success === false) {
+    return {
+      title: 'Movie Not Found - MoviezLand',
+      description: 'The requested movie could not be found.',
+    };
+  }
 
   return {
-    title: movie ? `${movie.title} - MoviezLand` : 'Movie Details - MoviezLand',
-    description: movie?.overview || 'Movie details and trailer',
-  }
+    title: movie.title ? `${movie.title} - MoviezLand` : 'Movie Details - MoviezLand',
+    description: movie.overview || 'Movie details and trailer',
+  };
 }
 
 export default async function MovieDetails({ params }) {
   const { id } = await params;
   const [movieResult, similarResult] = await Promise.all([
-    APIRequests.movie(id),
-    APIRequests.similar(id)
+    getMovie(id),
+    getSimilar(id)
   ]);
 
-  const trailerPath = movieResult[1];
-  const movie = movieResult[0] ? movieResult[0] : 'No Trailer Available';
+  const movie = movieResult?.[0];
+  if (!movie || movie.status === 404 || movie.success === false || !movie.id) {
+    notFound();
+  }
+
+  const trailerPath = movieResult?.[1] || null;
   const similarMovies = similarResult?.results || [];
 
   let imageUrl;
@@ -35,31 +57,36 @@ export default async function MovieDetails({ params }) {
     imageUrl = `${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}${movie.poster_path}`;
   }
 
+
   return (
     <div className="relative min-h-screen text-white bg-[#0B1120]">
       <div className="pt-8 px-6 md:px-12 lg:px-20 relative z-50">
         <BackButton />
       </div>
 
-      <div className="absolute inset-0 h-[70vh]">
-        <Image
-          src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}${movie.backdrop_path}`}
-          alt={movie.title}
-          fill
-          className="object-cover opacity-30"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] via-[#0B1120]/70 to-transparent" />
-      </div>
+      {movie.backdrop_path && (
+        <div className="absolute inset-0 h-[70vh]">
+          <Image
+            src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}${movie.backdrop_path}`}
+            alt={movie.title || "Backdrop"}
+            fill
+            className="object-cover opacity-30"
+            priority
+            unoptimized
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] via-[#0B1120]/70 to-transparent" />
+        </div>
+      )}
 
       <div className="relative z-10 flex flex-col lg:flex-row gap-10 lg:gap-16 pt-24 md:pt-32 px-6 md:px-12 lg:px-20 py-12">
         <div className="relative w-[280px] h-[420px] mx-auto lg:mx-0 rounded-2xl overflow-hidden shadow-2xl shadow-black/80 ring-1 ring-white/10 shrink-0">
           <Image
             src={`${imageUrl}`}
-            alt={movie.title}
+            alt={movie.title || "Poster"}
             fill
             className="object-cover"
             priority
+            unoptimized={imageUrl.startsWith("http")}
           />
         </div>
 

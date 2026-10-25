@@ -8,6 +8,9 @@ const nextConfig = {
                 hostname: 'image.tmdb.org',
             },
             {
+                hostname: 'www.themoviedb.org',
+            },
+            {
                 hostname: 'cdn-icons-png.flaticon.com',
             },
             {

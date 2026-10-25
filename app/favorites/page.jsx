@@ -20,17 +20,34 @@ export default function FavoritesMovies() {
       return;
     }
 
+    let isCancelled = false;
+
     const fetchFavorites = async () => {
       try {
-        const promises = user.favorites.map(id => APIRequests.movie(id));
-        const results = await Promise.all(promises);
-        setMovies(results.map(item => item[0]));
+        const favoriteIds = user.favorites;
+        const BATCH_SIZE = 6;
+        const loadedMovies = [];
+
+        for (let i = 0; i < favoriteIds.length; i += BATCH_SIZE) {
+          if (isCancelled) return;
+          const batch = favoriteIds.slice(i, i + BATCH_SIZE);
+          const batchResults = await Promise.all(batch.map(id => APIRequests.movie(id)));
+          loadedMovies.push(...batchResults.map(item => item?.[0]).filter(Boolean));
+        }
+
+        if (!isCancelled) {
+          setMovies(loadedMovies);
+        }
       } catch (err) {
         console.error("Error fetching favorite movies:", err);
       }
     };
 
     fetchFavorites();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [user?.favorites]);
 
   useEffect(() => {

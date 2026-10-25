@@ -16,18 +16,22 @@ export async function POST(req) {
 
     try {
         await dbConnect();
+
+        const existingUser = await User.findOne({
+            $or: [{ name }, { email }]
+        });
+
+        if (existingUser) {
+            if (existingUser.name === name) {
+                return NextResponse.json({ error: 'Name already exists ' }, { status: 400 });
+            }
+            return NextResponse.json({ error: 'Email already exists ' }, { status: 400 });
+        }
+
         const hashedPassword = await passwordHashing(password);
         const defaultImg = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
         const user = new User({ name, email, password: hashedPassword, profileImg: defaultImg });
 
-        const existingName = await User.findOne({ name });
-        if (existingName) {
-            return NextResponse.json({ error: 'Name already exists ' }, { status: 400 });
-        }
-        const existingEmail = await User.findOne({ email });
-        if (existingEmail) {
-            return NextResponse.json({ error: 'Email already exists ' }, { status: 400 });
-        }
         await user.save();
         return NextResponse.json({ message: 'User created', id: user._id, email: user.email, name: user.name, favorites: user.favorites, profileImg: user.profileImg }, { status: 201 });
     } catch (err) {
